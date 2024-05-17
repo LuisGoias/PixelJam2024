@@ -14,16 +14,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 initialPosition;
 
     // Stamina
-    [SerializeField] private float maxStamina = 30f;
-    [SerializeField] private float staminaConsumptionRate = 5f;
-    [SerializeField] private float staminaRecoveryRate = 5f;
+    [SerializeField] private float maxStamina = 50f;
+    [SerializeField] private float staminaConsumptionRate = 10f;
+    [SerializeField] private float staminaRecoveryRate = 15f;
     [SerializeField] private float currentStamina;
-    [SerializeField] private float outOfStaminaLimit = 3f;
+    [SerializeField] private float outOfStaminaLimit = 0f;
+    [SerializeField] private PlayerStaminaBar staminaBar;
 
+
+    private void Awake()
+    {
+        staminaBar = GetComponentInChildren<PlayerStaminaBar>();
+    }
     void Start()
     {
         initialPosition = transform.position;
         currentStamina = maxStamina;
+        staminaBar.UpdateStaminaBar(currentStamina, maxStamina);
     }
 
     void Update()
@@ -99,11 +106,13 @@ public class PlayerController : MonoBehaviour
     void ConsumeStamina(float amount)
     {
         currentStamina = Mathf.Max(0, currentStamina - amount);
+        staminaBar.UpdateStaminaBar(currentStamina, maxStamina);
     }
 
     void RecoverStamina(float amount)
     {
         currentStamina = Mathf.Min(maxStamina, currentStamina + amount);
+        staminaBar.UpdateStaminaBar(currentStamina, maxStamina);
     }
 
     IEnumerator LowerPlayerCoroutine()

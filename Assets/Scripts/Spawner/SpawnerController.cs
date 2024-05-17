@@ -14,13 +14,31 @@ public class SpawnerController : MonoBehaviour
     //Obstacle variables
     [SerializeField] private GameObject[] obstaclePrefabs;
     public float obstacleSpawnTime = 3f;
+    [Range(0, 1)] public float obstacleSpawnTimeFactor = 0.1f;
     private float timeUntilObstacleSpawn;
-    [SerializeField] private float obstacleSpeed = 1f;
+    [SerializeField] private float obstacleSpeed = 5f;
+    [Range(0, 1)] public float obstacleSpeedFactor = 0.2f;
+
+
+    //Obstacle variables that are changing overtime
+    private float _obstacleSpawnTime;
+    private float _obstacleSpeed;
+
+    //Survival
+    private float timeAlive;
+
+
+    private void Start()
+    {
+        GameManager.instance.onPlay.AddListener(ResetFactors);
+    }
 
     private void Update()
     {
         if(GameManager.instance.isPlaying)
         {
+            timeAlive += Time.deltaTime;
+
             if(GameManager.instance.currentScore - lastBossSpawnScore >= 20)
             {
                 bossSpawn = true;
@@ -29,6 +47,7 @@ public class SpawnerController : MonoBehaviour
                 lastBossSpawnScore = GameManager.instance.currentScore;
             } else
             {
+                CalculateFactors();
                 SpawnLoop();
             }
         }
@@ -38,7 +57,7 @@ public class SpawnerController : MonoBehaviour
     private void SpawnLoop()
     {
         timeUntilObstacleSpawn += Time.deltaTime;
-        if(timeUntilObstacleSpawn >= obstacleSpawnTime)
+        if(timeUntilObstacleSpawn >= _obstacleSpawnTime)
         {
             Spawn();
             timeUntilObstacleSpawn = 0;
@@ -52,7 +71,7 @@ public class SpawnerController : MonoBehaviour
        GameObject spawnableObstacle = Instantiate(obstacleSpawn, transform.position, Quaternion.identity);
 
        Rigidbody2D obstacleRB = spawnableObstacle.GetComponent<Rigidbody2D>();
-       obstacleRB.velocity = Vector2.left * obstacleSpeed;
+       obstacleRB.velocity = Vector2.left * _obstacleSpeed;
     }
 
     private IEnumerator SpawnBossWithBehavior()
@@ -66,8 +85,20 @@ public class SpawnerController : MonoBehaviour
         yield return new WaitForSeconds(bossPauseDuration);
 
         // Move left again after the pause
-        obstacleRB.velocity = Vector2.left * (obstacleSpeed * 2f);
+        obstacleRB.velocity = Vector2.left * (_obstacleSpeed * 2f);
 
         bossSpawn = false;
+    }
+
+    private void CalculateFactors()
+    {
+        _obstacleSpawnTime = obstacleSpawnTime * Mathf.Pow(timeAlive, obstacleSpawnTimeFactor);
+        _obstacleSpeed = obstacleSpeed * Mathf.Pow(timeAlive, obstacleSpeedFactor);
+    }
+    private void ResetFactors()
+    {
+        timeAlive = 1f;
+        _obstacleSpawnTime = obstacleSpawnTime;
+        _obstacleSpeed = obstacleSpeed;
     }
 }
