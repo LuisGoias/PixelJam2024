@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class UIManager : MonoBehaviour
 {
+    //UI
     [SerializeField] private TextMeshProUGUI scoreGUI;
     [SerializeField] private GameObject startMenuUI;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject optionsUI;
     GameManager gameManager;
 
-
+    //GameOver scores
     [SerializeField] private TextMeshProUGUI gameOverScoreUI;
     [SerializeField] private TextMeshProUGUI gameOverHighscoreUI;
+
+    //Options
+    [SerializeField] private Slider volumeSlider;
+    public AudioMixer audioMixer;
 
     private void Start()
     {
@@ -34,6 +42,19 @@ public class UIManager : MonoBehaviour
         gameOverScoreUI.text = "Score: " + gameManager.PrettyScore();
         gameOverHighscoreUI.text = "Highscore: " + gameManager.PrettyHighscore();
     }
+
+    public void ActivateOptionsUI()
+    {
+        optionsUI.SetActive(true);
+    }
+
+
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
+    }
+
+
     private void OnGUI()
     {
         scoreGUI.text = gameManager.PrettyScore();
