@@ -13,11 +13,11 @@ public class SpawnerController : MonoBehaviour
 
     //Obstacle variables
     [SerializeField] private GameObject[] obstaclePrefabs;
-    public float obstacleSpawnTime = 3f;
+    public float obstacleSpawnTime = 4f;
     [Range(0, 1)] public float obstacleSpawnTimeFactor = 0.1f;
     private float timeUntilObstacleSpawn;
     [SerializeField] private float obstacleSpeed = 5f;
-    [Range(0, 1)] public float obstacleSpeedFactor = 0.2f;
+    [Range(0, 2)] public float obstacleSpeedFactor = 0.2f;
 
 
     //Obstacle variables that are changing overtime
@@ -27,6 +27,9 @@ public class SpawnerController : MonoBehaviour
     //Survival
     private float timeAlive;
 
+    //PlayerCollision
+    [SerializeField] private PlayerCollision playerCollision;
+
 
     private void Start()
     {
@@ -35,7 +38,7 @@ public class SpawnerController : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.instance.isPlaying)
+        if(GameManager.instance.isPlaying && !playerCollision.playerWasHit)
         {
             timeAlive += Time.deltaTime;
 

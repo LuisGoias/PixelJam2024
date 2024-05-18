@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     Animator anim;
+    [SerializeField] private PlayerStaminaBar staminaBar;
+    public bool playerWasHit = false;
 
     private void Start()
     {
@@ -14,7 +16,14 @@ public class PlayerCollision : MonoBehaviour
 
     private void RestartPlayer()
     {
+        //Set player position to default position
         gameObject.GetComponent<Transform>().position = new Vector3(-5.89f, 0f);
+
+        //Set player stamina to max value
+        staminaBar.RestartStaminaBar();
+
+        playerWasHit = false;
+
         gameObject.SetActive(true);
     }
 
@@ -29,6 +38,7 @@ public class PlayerCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             anim.SetBool("isHit", true);
+            playerWasHit = true;
             StartCoroutine(Delay(1f));
         }
     }

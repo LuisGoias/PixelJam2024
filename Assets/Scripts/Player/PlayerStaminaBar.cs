@@ -17,4 +17,9 @@ public class PlayerStaminaBar : MonoBehaviour
     {
         slider.value = currentValue / maxValue;
     }
+
+    public void RestartStaminaBar()
+    {
+        slider.value = 50f;
+    }
 }
