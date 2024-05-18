@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool forceDescent = false;
     private Vector3 initialPosition;
+    Animator anim;
 
     // Stamina
     [SerializeField] private float maxStamina = 50f;
@@ -28,13 +29,15 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        initialPosition = transform.position;
+        initialPosition = new Vector3(-5.89f, 0f);
         currentStamina = maxStamina;
+        anim = GetComponent<Animator>();
         staminaBar.UpdateStaminaBar(currentStamina, maxStamina);
     }
 
     void Update()
     {
+        anim.SetFloat("height", transform.position.y);
         if (!isJumping
             && (Input.GetKeyDown(KeyCode.Space) ||
             Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
         if (isJumping)
         {
+            anim.SetBool("isFall", false);
             if (currentStamina <= outOfStaminaLimit)
             {
                 if (!forceDescent)
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
         if (!isJumping && currentStamina < maxStamina)
         {
             RecoverStamina(staminaRecoveryRate * Time.deltaTime);
+            anim.SetBool("isFall", false);
         }
     }
 
@@ -119,6 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         while (transform.position.y > initialPosition.y)
         {
+            anim.SetBool("isFall", true);
             transform.Translate(Vector3.down * dropSpeed * Time.deltaTime);
             yield return null;
         }

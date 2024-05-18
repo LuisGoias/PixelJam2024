@@ -79,9 +79,12 @@ public class SpawnerController : MonoBehaviour
         GameObject spawnableObstacle = Instantiate(bossObstaclePrefab, transform.position, Quaternion.identity);
 
         Rigidbody2D obstacleRB = spawnableObstacle.GetComponent<Rigidbody2D>();
+        Animator animator = spawnableObstacle.GetComponent<Animator>();
+
         // Move a little bit to the left
         obstacleRB.position = Vector2.left * -6.5f;
 
+        animator.SetBool("isAggro", true);
         yield return new WaitForSeconds(bossPauseDuration);
 
         // Move left again after the pause
