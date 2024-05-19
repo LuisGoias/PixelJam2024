@@ -18,7 +18,8 @@ public class DecorativeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpawnLoop();
+        if (GameManager.instance.isPlaying) { SpawnLoop(); }
+            
     }
 
     private void SpawnLoop()

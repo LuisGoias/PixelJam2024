@@ -8,15 +8,15 @@ using UnityEngine.Audio;
 public class UIManager : MonoBehaviour
 {
     //UI
-    [SerializeField] private TextMeshProUGUI scoreGUI;
+    [SerializeField] private Text scoreGUI;
     [SerializeField] private GameObject startMenuUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject optionsUI;
     GameManager gameManager;
 
     //GameOver scores
-    [SerializeField] private TextMeshProUGUI gameOverScoreUI;
-    [SerializeField] private TextMeshProUGUI gameOverHighscoreUI;
+    [SerializeField] private Text gameOverScoreUI;
+    [SerializeField] private Text gameOverHighscoreUI;
 
     //Options
     [SerializeField] private Slider volumeSlider;
