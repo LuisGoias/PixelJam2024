@@ -9,16 +9,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 5f;
     [SerializeField] private float dropSpeed = 5f;
 
-    private bool isJumping = false;
-    private bool forceDescent = false;
+    public bool isJumping = false;
+    public bool forceDescent = false;
     private Vector3 initialPosition;
     Animator anim;
 
     // Stamina
-    [SerializeField] private float maxStamina = 50f;
+    [SerializeField] public float maxStamina = 50f;
     [SerializeField] private float staminaConsumptionRate = 10f;
     [SerializeField] private float staminaRecoveryRate = 15f;
-    [SerializeField] private float currentStamina;
+    [SerializeField] public float currentStamina;
     [SerializeField] private float outOfStaminaLimit = 0f;
     [SerializeField] private PlayerStaminaBar staminaBar;
 

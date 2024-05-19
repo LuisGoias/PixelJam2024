@@ -6,6 +6,7 @@ public class PlayerCollision : MonoBehaviour
 {
     Animator anim;
     [SerializeField] private PlayerStaminaBar staminaBar;
+    [SerializeField] private PlayerController playerController;
     public bool playerWasHit = false;
 
     private void Start()
@@ -20,7 +21,13 @@ public class PlayerCollision : MonoBehaviour
         gameObject.GetComponent<Transform>().position = new Vector3(-5.89f, 0f);
 
         //Set player stamina to max value
-        staminaBar.RestartStaminaBar();
+        playerController.currentStamina = 50f;
+
+        staminaBar.UpdateStaminaBar(
+            playerController.currentStamina, playerController.maxStamina);
+
+        playerController.isJumping = false;
+        playerController.forceDescent = false;
 
         playerWasHit = false;
 

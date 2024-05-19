@@ -758,6 +758,8 @@ MonoBehaviour:
   jumpHeight: 4
   jumpSpeed: 5
   dropSpeed: 5
+  isJumping: 0
+  forceDescent: 0
   maxStamina: 50
   staminaConsumptionRate: 10
   staminaRecoveryRate: 15
@@ -777,6 +779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staminaBar: {fileID: 1114087463}
+  playerController: {fileID: 382256255}
   playerWasHit: 0
 --- !u!70 &382256257
 CapsuleCollider2D:
