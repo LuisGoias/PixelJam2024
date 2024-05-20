@@ -7,6 +7,7 @@ public class PlayerCollision : MonoBehaviour
     Animator anim;
     [SerializeField] private PlayerStaminaBar staminaBar;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private SpawnerController spawnerController;
     public bool playerWasHit = false;
 
     private void Start()
@@ -28,8 +29,9 @@ public class PlayerCollision : MonoBehaviour
 
         playerController.isJumping = false;
         playerController.forceDescent = false;
-
         playerWasHit = false;
+
+        spawnerController.lastBossSpawnScore = 0;
 
         gameObject.SetActive(true);
     }

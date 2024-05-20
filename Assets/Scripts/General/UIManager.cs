@@ -48,6 +48,11 @@ public class UIManager : MonoBehaviour
         optionsUI.SetActive(true);
     }
 
+    public void ActivateQuit()
+    {
+        Application.Quit();
+    }
+
 
     public void SetVolume(float volume)
     {

@@ -8,7 +8,7 @@ public class SpawnerController : MonoBehaviour
     //Boss variables
     [SerializeField] private GameObject bossObstaclePrefab;
     [SerializeField] private bool bossSpawn = false;
-    private float lastBossSpawnScore = 0;
+    public float lastBossSpawnScore = 0;
     [SerializeField] private float bossPauseDuration = 2f;
 
     //Obstacle variables
